@@ -13,7 +13,7 @@ var express = require('express');
 var request = require('request');
 var bodyParser = require('body-parser');
 var CryptoJS = require("crypto-js");
-var config = require('./config/beta/configurations.json');
+// var config = require('./config/beta/configurations.json');
 
 var http = express();
 var port = process.env.PORT || 5000;
