@@ -31,6 +31,7 @@ function verifyRequest(req, res, next) {
 	var channelSignature = req.get('X-LINE-ChannelSignature');
 	var sha256 = CryptoJS.HmacSHA256(JSON.stringify(req.body), config.channelSecret);
 	var base64encoded = CryptoJS.enc.Base64.stringify(sha256);
+	console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
 	if (base64encoded === channelSignature) {
 		next();
 	} else {
