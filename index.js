@@ -16,7 +16,8 @@ var CryptoJS = require("crypto-js");
 var config = require('./config/beta/configurations.json');
 
 var http = express();
-var port = config.port;
+var port = process.env.PORT || 5000;
+// var port = config.port;
 
 http.use(bodyParser.json());
 
