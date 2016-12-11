@@ -34,7 +34,7 @@ function verifyRequest(req, res, next) {
 	if (base64encoded === channelSignature) {
 		next();
 	} else {
-		res.status(470).end();
+		res.status(472).end();
 	}
 }
 
