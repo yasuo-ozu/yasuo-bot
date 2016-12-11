@@ -28,7 +28,7 @@ http.use(bodyParser.json());
 
 function verifyRequest(req, res, next) {
 	// Refer to https://developers.line.me/businessconnect/development-bot-server#signature_validation
-	var channelSignature = req.get('X-LINE-ChannelSignature');
+	var channelSignature = req.get('X-Line-ChannelSignature');
 	var sha256 = CryptoJS.HmacSHA256(JSON.stringify(req.body), config.channelSecret);
 	var base64encoded = CryptoJS.enc.Base64.stringify(sha256);
 	console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
