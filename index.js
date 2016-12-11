@@ -28,48 +28,47 @@ http.use(bodyParser.json());
 
 function verifyRequest(req, res, next) {
 	// Refer to https://developers.line.me/businessconnect/development-bot-server#signature_validation
+}
+
+http.post('/events', function(req, res) {
 	var channelSignature = req.get('x-line-signature');
 	var sha256 = CryptoJS.HmacSHA256(JSON.stringify(req.body), config.channelSecret);
 	var base64encoded = CryptoJS.enc.Base64.stringify(sha256);
 	//console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
 	//console.log(req.headers);
 	if (base64encoded === channelSignature) {
-		next();
+		var result = req.body.result;
+		if (!result || !result.length || !result[0].content) {
+			console.log(req.body.result);
+			res.status(471).end();
+			return;
+		}
+		res.status(200).end();
+
+		// One request may have serveral contents in an array.
+		var content = result[0].content;
+		// mid
+		var from = content.from;
+		// Content type would be possibly text/image/video/audio/gps/sticker/contact.
+		var type = content.type;
+		// assume it's text type here.
+		var text = content.text;
+
+		// Refer to https://developers.line.me/businessconnect/api-reference#sending_message
+		sendMsg(config.echoBotMid, {
+			contentType: 1,
+			toType: 1,
+			text: 'respond'
+		}, function(err) {
+			if (err) {
+				// sending message failed
+				return;
+			}
+			// message sent
+		});
 	} else {
 		res.status(472).end();
 	}
-}
-
-http.post('/events', verifyRequest, function(req, res) {
-	var result = req.body.result;
-	if (!result || !result.length || !result[0].content) {
-		console.log(req.body.result);
-		res.status(471).end();
-		return;
-	}
-	res.status(200).end();
-
-	// One request may have serveral contents in an array.
-	var content = result[0].content;
-	// mid
-	var from = content.from;
-	// Content type would be possibly text/image/video/audio/gps/sticker/contact.
-	var type = content.type;
-	// assume it's text type here.
-	var text = content.text;
-
-	// Refer to https://developers.line.me/businessconnect/api-reference#sending_message
-	sendMsg(config.echoBotMid, {
-		contentType: 1,
-		toType: 1,
-		text: 'respond'
-	}, function(err) {
-		if (err) {
-			// sending message failed
-			return;
-		}
-		// message sent
-	});
 });
 
 function sendMsg(who, content, callback) {
