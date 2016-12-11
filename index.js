@@ -39,7 +39,7 @@ http.post('/events', function(req, res) {
 	if (base64encoded === channelSignature) {
 		var result = req.body.result;
 		if (!result || !result.length || !result[0].content) {
-			console.log(req.body.result);
+			console.log("body : " + req.body);
 			res.status(471).end();
 			return;
 		}
