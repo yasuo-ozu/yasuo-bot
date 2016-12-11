@@ -41,8 +41,10 @@ line.init({
  */
 
 app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
+	console.log("webhook1");
   // get content from request body
   const promises = req.body.events.map(event => {
+	console.log("webhook2");
     // reply message
     return line.client
       .replyMessage({
@@ -55,6 +57,7 @@ app.post('/webhook/', line.validator.validateSignature(), (req, res, next) => {
         ]
       })
   })
+	console.log("webhook3");
   Promise
     .all(promises)
     .then(() => res.json({success: true}))
