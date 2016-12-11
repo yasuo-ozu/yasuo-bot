@@ -43,7 +43,7 @@ function verifyRequest(req, res, next) {
 http.post('/events', verifyRequest, function(req, res) {
 	var result = req.body.result;
 	if (!result || !result.length || !result[0].content) {
-		console.log(result);
+		console.log(request.body);
 		res.status(471).end();
 		return;
 	}
