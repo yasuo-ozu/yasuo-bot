@@ -1,5 +1,5 @@
 'use strict'
-const line = require('./index')
+const line = require('node-line-bot-api')
 const express = require('express')
 const bodyParser = require('body-parser')
 const lineClient = line.client
