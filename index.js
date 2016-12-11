@@ -18,6 +18,11 @@ var CryptoJS = require("crypto-js");
 var http = express();
 var port = process.env.PORT || 5000;
 // var port = config.port;
+var config = {
+  accessToken: 'OqndqEonw+rNnlCwR3wc8/TImaZ3QzTYvyKqH6mkq8OIi+ex2sAuZQ9VEzXuwieESUOaw5d3Af1HySAV6FpVrPNMj/8fM8ojDIIwnK1vZzoRMYIMRc3o0kLFSo1TdFlKxW/yCQpP22y+l+0cZJDYPAdB04t89/1O/w1cDnyilFU=',
+  // (Optional) for webhook signature validation
+  channelSecret: 'deaece338ebcadc7df81aa2b77cff286'
+};
 
 http.use(bodyParser.json());
 
