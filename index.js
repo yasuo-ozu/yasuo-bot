@@ -32,6 +32,7 @@ function verifyRequest(req, res, next) {
 	var sha256 = CryptoJS.HmacSHA256(JSON.stringify(req.body), config.channelSecret);
 	var base64encoded = CryptoJS.enc.Base64.stringify(sha256);
 	console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
+	console.log(req.headers);
 	if (base64encoded === channelSignature) {
 		next();
 	} else {
@@ -84,7 +85,7 @@ function sendMsg(who, content, callback) {
 		url: config.channelUrl + '/v1/events',
 		headers: {
 			'Content-Type': 'application/json',
-			'X-LINE-ChannelToken': config.channelToken
+			'X-Line-ChannelToken': config.channelToken
 		},
 		json: data
 	}, function(err, res, body) {
