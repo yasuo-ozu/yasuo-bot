@@ -28,11 +28,11 @@ http.use(bodyParser.json());
 
 function verifyRequest(req, res, next) {
 	// Refer to https://developers.line.me/businessconnect/development-bot-server#signature_validation
-	var channelSignature = req.get('X-Line-ChannelSignature');
+	var channelSignature = req.get('x-line-signature');
 	var sha256 = CryptoJS.HmacSHA256(JSON.stringify(req.body), config.channelSecret);
 	var base64encoded = CryptoJS.enc.Base64.stringify(sha256);
-	console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
-	console.log(req.headers);
+	//console.log(base64encoded + "\n\n\n" + channelSignature + "\n\n");
+	//console.log(req.headers);
 	if (base64encoded === channelSignature) {
 		next();
 	} else {
